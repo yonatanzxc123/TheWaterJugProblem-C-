@@ -1,41 +1,41 @@
-#pragma once
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <list>
+#pragma once  
+#include <iostream>  
+#include <vector>  
+#include <list>  
 
+class Graph  
+{  
+private:  
+   // Vector of pairs<int, int> representing vertices  
+   std::vector<std::pair<int, int>> vertices;  
 
-class Graph
-{
-private:
-	int vertices;
-	int edges;
-	std::vector<std::list<std::size_t>> adj_;
+   // Vector of linked lists, where each linked list contains pairs<int, int>  
+   std::vector<std::list<std::pair<int, int>>> adj_List;  
 
+public:  
+   // Constructor  
+   Graph(int n)  
+   {  
+       vertices.resize(n);  
+       adj_List.resize(n);  
+   }  
 
-public:
-	//Constractor
-	Graph(int n) : vertices(n), edges(0)
-	{
-		adj_.resize(n);
-	}
-	//Making an empty graph with n vertices
-	Graph* MakeEmptyGraph(int n)
-	{ 
-		return new Graph(n); 
-	};
-	// adding Eddge
-	void AddEdge(int u, int v)
-	{
-		adj_[u].push_back(v);
-		++edges;
-	}
-	// Sorting and returning an adjacency list of a vertex
-	auto GetAdj(int u) -> std::list<std::size_t>
-	{
-		adj_[u].sort();
-		return adj_[u];
-	}
+   // Making an empty graph with n vertices  
+   Graph* MakeEmptyGraph(int n)  
+   {  
+       return new Graph(n);  
+   }  
 
+   // Adding an edge   need to fix so it will be both pair types 
+   void AddEdge(int u, std::pair<int, int> v)
+   {  
+       adj_List[u].push_back(v);  
+   }  
 
+   // Sorting and returning an adjacency list of a vertex  
+   auto GetAdjList(int u) -> std::list<std::pair<int, int>>
+   {  
+       adj_List[u].sort();  
+       return adj_List[u];  
+   }  
 };
