@@ -7,7 +7,7 @@ using namespace std;
 int main()  
 {  
    int smallJugSize, largeJugSize, targetSize, method, runningTimeFlag, numOp;  
-   cout << "Do you want to see the running time?\n  pick: 0 - No\n 1 - Yes";  
+   cout << "Do you want to see the running time?\npick:\n0 - No 1 - Yes";  
    cin >> runningTimeFlag;  
    cout << "Enter method to be used\n  pick: 1 or 2\n";  
    cin >> method;  
@@ -25,5 +25,5 @@ int main()
    }  
 
    Printer printer;
-   printer.printInstructions(numOp);
+ //  printer.printInstructions(numOp);
 }

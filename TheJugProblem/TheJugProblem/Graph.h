@@ -1,7 +1,28 @@
 #pragma once  
 #include <iostream>  
 #include <vector>  
-#include <list>  
+#include <list> 
+#include <algorithm>
+#include <unordered_map>
+#include <stdexcept> 
+#include <utility>     // std::pair
+#include <unordered_set>
+
+
+
+
+
+// Helper func for std::pair<int,int>
+struct PairHash
+{
+    std::size_t operator()(const std::pair<int, int>& p) const noexcept
+    {
+        return (static_cast<std::size_t>(p.first) << 16) ^ static_cast<std::size_t>(p.second);
+    }
+};
+
+
+
 
 class Graph  
 {  
@@ -10,32 +31,24 @@ private:
    std::vector<std::pair<int, int>> vertices;  
 
    // Vector of linked lists, where each linked list contains pairs<int, int>  
-   std::vector<std::list<std::pair<int, int>>> adj_List;  
+   std::vector<std::list<std::pair<int, int>>> adj_List; 
+   std::unordered_map<std::pair<int, int>,std::size_t, PairHash>    indexByVertex; // (x,y)  -> id
+
+   // helper: make sure a vertex exists and return its id 
+   std::size_t ensureVertex(const std::pair<int, int>& v);
 
 public:  
-   // Constructor  
-   Graph(int n)  
-   {  
-       vertices.resize(n);  
-       adj_List.resize(n);  
-   }  
+    explicit Graph(size_t n = 0);       
 
-   // Making an empty graph with n vertices  
-   Graph* MakeEmptyGraph(int n)  
-   {  
-       return new Graph(n);  
-   }  
 
-   // Adding an edge   need to fix so it will be both pair types 
-   void AddEdge(int u, std::pair<int, int> v)
-   {  
-       adj_List[u].push_back(v);  
-   }  
+   static Graph* MakeEmptyGraph(std::size_t n = 0) { return new Graph(n); }
 
-   // Sorting and returning an adjacency list of a vertex  
-   auto GetAdjList(int u) -> std::list<std::pair<int, int>>
-   {  
-       adj_List[u].sort();  
-       return adj_List[u];  
-   }  
+    void AddEdge(const std::pair<int, int>& u,const std::pair<int, int>& v);
+
+    const std::list<std::pair<int, int>>&GetAdjList(const std::pair<int, int>& u) const;
+
+  
+
 };
+
+
