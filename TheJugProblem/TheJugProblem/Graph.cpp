@@ -28,7 +28,7 @@ std::size_t Graph::ensureVertex(const std::pair<int, int>& v)
 }
 
 
-// add directed edge u-> v to the graph
+// add directed edge u-> v to the graph FUN!
 void Graph::AddEdge(const std::pair<int, int>& u,const std::pair<int, int>& v)
 {
 	std::size_t uid = ensureVertex(u);
@@ -39,7 +39,7 @@ void Graph::AddEdge(const std::pair<int, int>& u,const std::pair<int, int>& v)
 	// if duplicate do nothing
 	if (std::find(lst.begin(), lst.end(), v) != lst.end()) return;
 
-	// insert so that the list stays lexicographically sorted as tasked in the Matala
+	// insert so that the list stays lexicographically sorted as tasked in the Matala		IDan i think we should check with something simple that the order is really right try to give a promt or somthing meh
 	auto pos = std::find_if(lst.begin(), lst.end(),[&](const auto& x) { return x > v; });
 	lst.insert(pos, v);                // O(deg)
 }
@@ -47,7 +47,7 @@ void Graph::AddEdge(const std::pair<int, int>& u,const std::pair<int, int>& v)
 
 
 
-
+// get the adjacency list of vertex u
 const std::list<std::pair<int, int>>&Graph::GetAdjList(const std::pair<int, int>& u) const
 {
 	auto it = indexByVertex.find(u);
@@ -58,14 +58,14 @@ const std::list<std::pair<int, int>>&Graph::GetAdjList(const std::pair<int, int>
 }
 
 
-
+//Might be useless check if you even need this func punk
 int numOfVertices(int largeJugSize, int smallJugSize)
 {
 	return (largeJugSize + 1) * (smallJugSize + 1); // plus 1 becuase jug can also hold 0 units of water
 }
 
 
-// V = {(x,y) | 0 <= x <= lagreJugSize, 0 <= y <= smallJugSize}
+//Adjust to you needs IDAN!
 auto createAllVertices(Graph& g, int largeJugSize, int smallJugSize)
 {
 
@@ -97,7 +97,7 @@ void allPossibleEdges(int largeJugSize, int smallJugSize, unordered_set<pair<int
 			if ((VerticesSet.find({ largeJugSize, j }) && (VerticesSet.find({ i, j })) != VerticesSet.end()))
 			{
 				// add edge
-				AddEdge(i, { largeJugSize, j }); //need fix according to new func
+				AddEdge(i, { largeJugSize, j }); //NEED FIXXXX according to new func
 			}
 
 
