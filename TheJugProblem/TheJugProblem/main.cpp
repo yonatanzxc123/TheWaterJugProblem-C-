@@ -1,4 +1,4 @@
-#include "Graph.h"  
+#include "Implement1.h"
 #include "Printer.h"  
 #include <iostream>  
 
@@ -6,27 +6,32 @@ using namespace std;
 
 int main()  
 {  
-   int smallJugSize, largeJugSize, targetSize, method, runningTimeFlag, numOp;  
-   cout << "Do you want to see the running time?\npick:\n0 - No 1 - Yes";  
-   cin >> runningTimeFlag;  
-   cout << "Enter method to be used\n  pick: 1 or 2\n";  
-   cin >> method;  
-   cout << "Enter size of Large jug\n";  
-   cin >> largeJugSize;  
-   cout << "Enter size of Small jug\n";  
-   cin >> smallJugSize;  
-   cout << "Enter target sizn\n";  
-   cin >> targetSize;  
+    int W, S, L;
+    int showTime;
+    int implementType;
+    if (!(std::cin >> L >> S >> W >> implementType >> showTime))
+    {
+        std::cerr << "Bad input\n";
+        return 1;
+    }
 
-   if (targetSize > largeJugSize)  
-   {  
-       cout << "Target size is larger than the large jug size\n";  
-       return 0;  
-   }  
+    auto t0 = std::chrono::steady_clock::now();
+    Solution sol = Implement1::solveUsingBFS(L, S, W);
+    auto t1 = std::chrono::steady_clock::now();
 
+    if (!sol.solvable)
+    {
+        std::cout << "No solution.\n";
+    }
+    else
+    {
+        Printer().print(sol.path);
+    }
 
-   // We need to add this later check relevent class for this mah niba
-
-   Printer printer;
- //  printer.printInstructions(numOp);
+    if (showTime == 1)
+    {
+        auto micro =
+            std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count();
+        std::cout << "Function took " << micro << " microseconds.\n";
+    }
 }

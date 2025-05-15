@@ -1,6 +1,7 @@
 ﻿#include "Graph.h"
 #include <algorithm>
 #include <unordered_set>
+#include <queue>
 
 
 using namespace std;
@@ -11,8 +12,6 @@ Graph::Graph(size_t n)
 	vertices.reserve(n);
 	adj_List.reserve(n);
 }
-
-
 
 
 // here we ensureVertex – insert(x, y) if missing, return numeric id
@@ -40,11 +39,9 @@ void Graph::AddEdge(const std::pair<int, int>& u,const std::pair<int, int>& v)
 	if (std::find(lst.begin(), lst.end(), v) != lst.end()) return;
 
 	// insert so that the list stays lexicographically sorted as tasked in the Matala		IDan i think we should check with something simple that the order is really right try to give a promt or somthing meh
-	auto pos = std::find_if(lst.begin(), lst.end(),[&](const auto& x) { return x > v; });
+	auto pos = std::find_if(lst.begin(), lst.end(), [&](const std::pair<int, int>& x) { return x > v; });
 	lst.insert(pos, v);                // O(deg)
 }
-
-
 
 
 // get the adjacency list of vertex u
@@ -65,19 +62,44 @@ int numOfVertices(int largeJugSize, int smallJugSize)
 }
 
 
-//Adjust to you needs IDAN!
-auto createAllVertices(Graph& g, int largeJugSize, int smallJugSize)
+bool Graph::BFS(const pair<int, int>& src, const pair<int, int>& dst, unordered_map<pair<int, int>, pair<int, int>, PairHash>& parent) const
 {
+	unordered_set<pair<int, int>, PairHash> visited;
+	queue<pair<int, int>> q;
+	visited.insert(src);
+	q.push(src);
 
-	for (int i = 0; i < largeJugSize; i++)
+	while (!q.empty())
 	{
-		for (int j = 0; i < smallJugSize; j++)
+		auto u = q.front(); q.pop();
+		if (u == dst) return true;
+		for (const auto& v : GetAdjList(u))
 		{
-			g.AddEdge({ i,j }, { largeJugSize, j }); // (x,y) → (L,y)
-
+			if (!visited.count(v))
+			{
+				visited.insert(v);
+				parent[v] = u;
+				q.push(v);
+			}
 		}
 	}
+	return false;
 }
+
+
+//Adjust to you needs IDAN!
+//auto createAllVertices(Graph& g, int largeJugSize, int smallJugSize)
+//{
+//
+//	for (int i = 0; i < largeJugSize; i++)
+//	{
+//		for (int j = 0; i < smallJugSize; j++)
+//		{
+//			g.AddEdge({ i,j }, { largeJugSize, j }); // (x,y) → (L,y)
+//
+//		}
+//	}
+//}
 
 
 

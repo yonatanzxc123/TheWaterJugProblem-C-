@@ -47,7 +47,7 @@ public:
 
     const std::list<std::pair<int, int>>&GetAdjList(const std::pair<int, int>& u) const;
 
-  
+    bool BFS(const std::pair<int, int>& src, const std::pair<int, int>& dst, std::unordered_map<std::pair<int, int>, std::pair<int, int>, PairHash>& parent) const;
 
 };
 
