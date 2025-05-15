@@ -21,7 +21,11 @@ struct PairHash
     }
 };
 
-
+struct Solution
+{
+    bool                                solvable;
+    std::vector<std::pair<int, int>>     path;   // (large, small) 
+};
 
 
 class Graph  
